@@ -3,14 +3,12 @@ import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native
 
 import MenuButton from './MenuButton';
 
-export default class Menu extends Component {
+export default class Training extends Component {
   render() {
     const {navigate} = this.props.navigation;
     return (
       <View style={styles.container}>
-          <MenuButton text='Start tutorial'/>
-          <MenuButton text='Start game'/>
-          <MenuButton text='Training' onPress={() => navigate('Training')}/>
+          <MenuButton text='Main screen' onPress={() => navigate('Menu')}/>
       </View>
     );
   }

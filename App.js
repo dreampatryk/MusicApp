@@ -1,33 +1,17 @@
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
 
 import Menu from './src/components/Menu/Menu';
+import Training from "./src/components/Menu/Training";
+import { Platform } from '@unimodules/core';
 
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-          <Menu/>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+const MainNavigator = createStackNavigator({
+  Menu: {screen: Menu},
+  Training: {screen: Training}
+}, 
+{
+  headerMode: 'none'
 });
+
+const App = createAppContainer(MainNavigator);
+
+export default App;

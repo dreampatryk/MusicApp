@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export default class Menu extends Component {
+export default class MenuButton extends Component {
   render() {
     return (
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={this.props.onPress}>
             <Text style={styles.buttonText}>{this.props.text}</Text>
         </TouchableOpacity>
     );
