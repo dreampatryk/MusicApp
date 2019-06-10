@@ -1,0 +1,7 @@
+{
+  "name": "MusicApp",
+  "displayName": "MusicApp",
+  "expo": {
+    "sdkVersion": "33.0.0"
+  }
+}
