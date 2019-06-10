@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-import MenuButton from './MenuButton';
+import MenuButton from '../Buttons/MenuButton';
 
 export default class Training extends Component {
   render() {
