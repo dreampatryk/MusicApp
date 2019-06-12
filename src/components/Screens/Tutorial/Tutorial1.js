@@ -37,8 +37,8 @@ export default class Tutorial1 extends Component {
             <View styles={styles.container}>
                 <MenuButton text='Back to main menu' onPress={() => navigate('Menu')}/>
                 <Image source={images[this.state.pictureIndex].source}/>
-                <MenuButton text='Back to main menu' onPress={this.nextPicture()}/>
-                <MenuButton text='Back to main menu' onPress={this.previousPicture()}/>
+                <MenuButton text='Back to main menu' onPress={() => this.nextPicture()}/>
+                <MenuButton text='Back to main menu' onPress={() => this.previousPicture()}/>
 
             </View>
         );
