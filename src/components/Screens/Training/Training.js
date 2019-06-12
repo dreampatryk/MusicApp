@@ -10,6 +10,7 @@ export default class Training extends Component {
         return (
             <View style={styles.container}>
                 <MenuButton text='Main screen' onPress={() => navigate('Menu')}/>
+                <Text>Cos </Text>
             </View>
         );
     }

@@ -14,7 +14,7 @@ export default class MenuButton extends Component {
 const styles = StyleSheet.create({
     button: {
         width:300,
-        backgroundColor: 'rgba(0,0,0,0.5)',
+        backgroundColor: 'powderblue',
         borderRadius: 25,
         paddingVertical: 13,
         marginVertical: 10,
