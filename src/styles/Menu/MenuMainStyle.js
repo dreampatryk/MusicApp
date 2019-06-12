@@ -6,7 +6,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         alignContent: 'space-between',
-        backgroundColor: '#F5FCFF',
-        marginBottom: 10
+        marginBottom: 10,
+        backgroundColor: 'transparent'
     }
 });

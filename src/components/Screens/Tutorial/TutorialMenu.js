@@ -8,11 +8,18 @@ export default class Training extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <View >
-                <ImageBackground source={{uri: 'http://lenduletmagazin.hu/wp-content/uploads/2016/07/u8PEixm.jpg'}} style={{width: '100%', height: '100%'}}>
-                <MenuButton text='Main screen' onPress={() => navigate('Menu')}/>
-                </ImageBackground>
-            </View>
+            <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')}
+                     style={{width: '100%', height: '100%', position: 'relative'}}>
+                <View style={styles.container}>
+                    <MenuButton text='Go back to main screen' onPress={() => navigate('Menu')}/>
+                    <Text style={{color: 'red'}}>Take the lessons from first to the last. You can always go back to them.</Text>
+                    <MenuButton text='Lesson 1' onPress={() => navigate('Tutorial1')}/>
+                    <MenuButton text='Lesson 2' onPress={() => navigate('Menu')}/>
+                    <MenuButton text='Lesson 3' onPress={() => navigate('Menu')}/>
+                    <MenuButton text='Lesson 4' onPress={() => navigate('Menu')}/>
+                    <MenuButton text='Lesson 5' onPress={() => navigate('Menu')}/>
+                </View>
+            </ImageBackground>
         );
     }
 }
