@@ -1,13 +1,15 @@
 import {createStackNavigator, createAppContainer} from 'react-navigation';
 
-import Menu from './src/components/Menu/Menu';
-import Training from "./src/components/Menu/Training";
+import MenuScreen from './src/components/Screens/MainMenu/MenuScreen';
+import Training from "./src/components/Screens/Training/Training";
+import TutorialMenu from "./src/components/Screens/Tutorial/TutorialMenu";
 import { Platform } from '@unimodules/core';
 
 const MainNavigator = createStackNavigator({
-  Menu: {screen: Menu},
-  Training: {screen: Training}
-}, 
+  Menu: {screen: MenuScreen},
+  Training: {screen: Training},
+  Tutorial: {screen: TutorialMenu}
+},
 {
   headerMode: 'none'
 });
