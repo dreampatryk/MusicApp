@@ -4,20 +4,38 @@ import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
 
-export default class Training extends Component {
+export default class TutorialMenu extends Component {
+
+    images1 = [
+        {req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg')}
+    ];
+    images = [
+        {reqTable: this.images1, text: "Lesson 1"},
+        {reqTable: this.images1, text: "Lesson 2"},
+        {reqTable: this.images1, text: "Lesson 3"},
+        {reqTable: this.images1, text: "Lesson 4"},
+        {reqTable: this.images1, text: "Lesson 5"},
+    ];
+    renderMenuButtons() {
+        return this.images.map((item, key) => {
+            return(
+                <MenuButton  text={item.text}  key={key}
+                             onPress={() => this.props.navigation.navigate('Tutorial',
+                    {images: item.reqTable, imgLength: item.reqTable.length})}/>
+            )
+        })
+    }
     render() {
-        const {navigate} = this.props.navigation;
+        const {navigation} = this.props;
         return (
             <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')}
                      style={{width: '100%', height: '100%', position: 'relative'}}>
                 <View style={styles.container}>
-                    <MenuButton text='Go back to main screen' onPress={() => navigate('Menu')}/>
+                    <MenuButton text='Go back to main screen' onPress={() => navigation.goBack()}/>
                     <Text style={{color: 'red'}}>Take the lessons from first to the last. You can always go back to them.</Text>
-                    <MenuButton text='Lesson 1' onPress={() => navigate('Tutorial1')}/>
-                    <MenuButton text='Lesson 2' onPress={() => navigate('Menu')}/>
-                    <MenuButton text='Lesson 3' onPress={() => navigate('Menu')}/>
-                    <MenuButton text='Lesson 4' onPress={() => navigate('Menu')}/>
-                    <MenuButton text='Lesson 5' onPress={() => navigate('Menu')}/>
+                    {this.renderMenuButtons()}
                 </View>
             </ImageBackground>
         );

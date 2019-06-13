@@ -11,7 +11,7 @@ export default class Training extends Component {
             <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')}
                              style={{width: '100%', height: '100%', position: 'relative'}}>
                 <View style={styles.container}>
-                    <MenuButton text='Main screen' onPress={() => navigate('Menu')}/>
+                    <MenuButton text='Go back to main screen' onPress={() => this.props.navigation.goBack()}/>
                 </View>
             </ImageBackground>
         );
