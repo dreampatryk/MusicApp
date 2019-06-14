@@ -5,5 +5,10 @@ export default StyleSheet.create({
         fontSize:30,
         fontWeight:'700',
         color:'red',
+    },
+    smallText: {
+        fontSize: 20,
+        fontWeight: '500',
+        color: 'red'
     }
 });
