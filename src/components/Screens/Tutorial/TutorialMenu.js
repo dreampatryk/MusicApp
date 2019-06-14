@@ -11,12 +11,32 @@ export default class TutorialMenu extends Component {
         {req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg')},
         {req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg')}
     ];
+    images2 = [
+        {req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg')}
+    ];
+    images3 = [
+        {req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg')}
+    ];
+    images4 = [
+        {req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg')}
+    ];
+    images5 = [
+        {req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg')}
+    ];
     images = [
         {reqTable: this.images1, text: "Lesson 1"},
-        {reqTable: this.images1, text: "Lesson 2"},
-        {reqTable: this.images1, text: "Lesson 3"},
-        {reqTable: this.images1, text: "Lesson 4"},
-        {reqTable: this.images1, text: "Lesson 5"},
+        {reqTable: this.images2, text: "Lesson 2"},
+        {reqTable: this.images3, text: "Lesson 3"},
+        {reqTable: this.images4, text: "Lesson 4"},
+        {reqTable: this.images5, text: "Lesson 5"},
     ];
     renderMenuButtons() {
         return this.images.map((item, key) => {

@@ -33,7 +33,6 @@ export default class Tutorial extends Component {
         const {navigation} = this.props;
         return (
             <View styles={styles.container}>
-                <Text>{JSON.stringify(this.images[0].source)}</Text>
                 <MenuButton text="Back to tutorials' menu" onPress={() => navigation.goBack()}/>
                 <Text>Slide number: {this.state.pictureIndex}</Text>
                 <Image source={this.images[this.state.pictureIndex].req} style={{width: 300, height: 300, position: 'relative'}}/>
