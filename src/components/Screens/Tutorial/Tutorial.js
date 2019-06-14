@@ -36,11 +36,9 @@ export default class Tutorial extends Component {
             <View styles={{flex: 1}}>
                 <View style={{paddingTop: 20, alignItems: 'center', height: '20%'}}>
                     <MenuButton text="Back to tutorials' menu" onPress={() => navigation.goBack()}/>
-                    <Text style={TutorialTexts.text}>Slide number: {this.state.pictureIndex}</Text>
+                    <Text style={TutorialTexts.text}>Slides left: {this.imgLength - this.state.pictureIndex - 1}</Text>
                 </View>
-                <View>
-                    <Image source={this.images[this.state.pictureIndex].req} style={{width: '100%', height: '70%'}}/>
-                </View>
+                <Image source={this.images[this.state.pictureIndex].req} style={{width: '100%', height: '70%'}}/>
                 <View style={{justifyContent: 'space-between', flexDirection: 'row', alignItems: 'flex-end', height: '10%'}}>
                     <TutorialButton disabled ={this.state.pictureIndex === 0} text='Previous' onPress={() => this.previousPicture()}/>
                     <TutorialButton disabled={this.state.pictureIndex !== this.imgLength - 1} text='Finish' onPress={() => navigation.goBack()}/>
