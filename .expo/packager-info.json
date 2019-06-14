@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 26400,
   "expoServerNgrokUrl": "https://by-73y.anonymous.musicapp.exp.direct",
   "packagerNgrokUrl": "https://packager.by-73y.anonymous.musicapp.exp.direct",
-  "ngrokPid": 13226
+  "ngrokPid": 26423
 }

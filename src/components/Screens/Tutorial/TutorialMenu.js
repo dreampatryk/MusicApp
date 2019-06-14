@@ -9,7 +9,8 @@ export default class TutorialMenu extends Component {
     images1 = [
         {req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg')},
         {req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg')},
-        {req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg')}
+        {req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg')},
+        {req: require('../../../static/TutorialImages/Tutorial1Images/4.jpg')}
     ];
     images2 = [
         {req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg')},
