@@ -4,6 +4,7 @@ import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
 import TutorialTexts from "../../../styles/Texts/TutorialTexts";
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default class StartGameMenu extends Component {
 
@@ -33,12 +34,13 @@ export default class StartGameMenu extends Component {
     render() {
         const {navigate} = this.props.navigation;
         return (
-            <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')}
-                             style={{width: '100%', height: '100%'}}>
-                <View style={styles.container}>
-                    <Text style={TutorialTexts.text}>Choose level</Text>
-                    {this.renderMenuButtons()}
-                </View>
+            <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')} style={{width: '100%', height: '100%'}}>
+                <ScrollView>
+                    <View style={styles.container}>
+                        <Text style={TutorialTexts.text}>Choose level</Text>
+                        {this.renderMenuButtons()}
+                    </View>
+                </ScrollView>
             </ImageBackground>
         );
     }
