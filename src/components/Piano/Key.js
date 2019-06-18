@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, TouchableOpacity } from 'react-native'
 
 import MidiNumbers from './MidiNumbers'
 
@@ -39,6 +39,10 @@ class Key extends Component {
       B: 6,
     },
   };
+
+  simulatePress = () => {
+    this.setState({touched: true})
+  }
 
   onPlayNoteInput = () => {
     this.setState({
@@ -84,17 +88,14 @@ class Key extends Component {
       children,
     } = this.props
 
-    const { touched } = this.state
-
+    const { touched } = this.state;
     return (
       <View
         style={[ styles.ReactPiano__Key,
           accidental ? styles.ReactPiano__Key__accidental : styles.ReactPiano__Key__natural, 
           {
             left: ratioToPercentage(this.getRelativeKeyPosition(midiNumber) * naturalKeyWidth),
-            width: ratioToPercentage(
-              accidental ? accidentalWidthRatio * naturalKeyWidth : naturalKeyWidth,
-            )
+            width: ratioToPercentage(accidental ? accidentalWidthRatio * naturalKeyWidth : naturalKeyWidth)
           },
           touched && styles.ReactPiano__Key__active]}
         onTouchStart={useTouchEvents ? this.onPlayNoteInput : null}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View, Button } from 'react-native';
+import { Image, StyleSheet, Text, View, Button, Orientation } from 'react-native';
 //import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
@@ -8,6 +8,14 @@ import TutorialTexts from "../../../styles/Texts/TutorialTexts";
 import Piano from '../../Piano/Piano';
 
 export default class Level extends Component {
+
+    onPlay = (name, number) => {
+        
+    };
+
+    onStop = (name, number) => {
+
+    };
 
     state = {
         noteIndex: 0,
@@ -19,7 +27,8 @@ export default class Level extends Component {
         const {navigation} = this.props;
         return (
             <View style={styles.container}>
-                <Piano/>
+                <Button title="Click" />
+                <Piano noteRange={{first: 'c4', last: 'e5'}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}></Piano>
             </View>
         );
     }
@@ -27,11 +36,9 @@ export default class Level extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    transform: [{ rotate: '90deg'}],
+    justifyContent: 'flex-end',
     flex: 1, 
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: 'green',
   }
 })
 

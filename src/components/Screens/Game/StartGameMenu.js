@@ -15,6 +15,9 @@ export default class StartGameMenu extends Component {
         {text: 'Level 3', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'},
         {text: 'Level 4', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'},
         {text: 'Level 5', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'},
+        {text: 'Level 6', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'},
+        {text: 'Level 4', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'},
+        {text: 'Level 5', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'},
         {text: 'Level 6', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'}
     ];
 

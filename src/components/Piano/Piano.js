@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Button } from 'react-native'
 
 import range from 'just-range'
 
@@ -71,7 +71,7 @@ class Piano extends Component {
           this.getMidiNumbers().map(midiNumber => {
             const { isAccidental } = MidiNumbers.getAttributes(midiNumber);
             return (
-              <Key
+              <Key ref={child => {this.child = child}}
                 naturalKeyWidth={ naturalKeyWidth }
                 midiNumber={ midiNumber }
                 noteRange={ this.state.noteRange }
@@ -91,11 +91,9 @@ class Piano extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    height: 140,
     position: 'relative', 
-    backgroundColor: 'red', 
-    borderTopColor: 'red', 
-    borderTopWidth: 1,
+    backgroundColor: 'transparent', 
   }
 })
 
