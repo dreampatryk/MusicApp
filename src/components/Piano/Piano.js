@@ -63,6 +63,16 @@ class Piano extends Component {
     return 1 / this.getNaturalKeyCount();
   }
 
+  keyReferences = this.getMidiNumbers().map(el => React.createRef());
+
+  simulateOnTouchStart(index){
+    this.keyReferences[index].current.simulateOnTouchStart();
+  }
+
+  simulateOnTouchEnd(index){
+    this.keyReferences[index].current.simulateOnTouchEnd();
+  }
+
   render() {
     const naturalKeyWidth = this.getNaturalKeyWidth();
     return (
@@ -71,7 +81,7 @@ class Piano extends Component {
           this.getMidiNumbers().map(midiNumber => {
             const { isAccidental } = MidiNumbers.getAttributes(midiNumber);
             return (
-              <Key ref={child => {this.child = child}}
+              <Key ref={this.keyReferences[midiNumber-60]}
                 naturalKeyWidth={ naturalKeyWidth }
                 midiNumber={ midiNumber }
                 noteRange={ this.state.noteRange }

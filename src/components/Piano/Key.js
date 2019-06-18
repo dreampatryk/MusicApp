@@ -40,8 +40,12 @@ class Key extends Component {
     },
   };
 
-  simulatePress = () => {
+  simulateOnTouchStart = () => {
     this.setState({touched: true})
+  }
+
+  simulateOnTouchEnd = () => {
+    this.setState({touched: false})
   }
 
   onPlayNoteInput = () => {
@@ -98,9 +102,6 @@ class Key extends Component {
             width: ratioToPercentage(accidental ? accidentalWidthRatio * naturalKeyWidth : naturalKeyWidth)
           },
           touched && styles.ReactPiano__Key__active]}
-        onTouchStart={useTouchEvents ? this.onPlayNoteInput : null}
-        onTouchCancel={useTouchEvents ? this.onStopNoteInput : null}
-        onTouchEnd={useTouchEvents ? this.onStopNoteInput : null}
       >
         <View style={ styles.ReactPiano__NoteLabelContainer }>{children}</View>
       </View>
