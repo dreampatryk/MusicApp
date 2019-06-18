@@ -65,11 +65,21 @@ class Piano extends Component {
 
   keyReferences = this.getMidiNumbers().map(el => React.createRef());
 
-  simulateOnTouchStart(index){
+  simulateOnTouchStart(note){
+    index = MidiNumbers.fromNote(note);
+    if(index < this.state.noteRange.first || index > this.state.noteRange.last)
+      return;
+
+    index = index - this.state.noteRange.first;
     this.keyReferences[index].current.simulateOnTouchStart();
   }
 
-  simulateOnTouchEnd(index){
+  simulateOnTouchEnd(note){
+    index = MidiNumbers.fromNote(note);
+    if(index < this.state.noteRange.first || index > this.state.noteRange.last)
+      return;
+
+    index = index - this.state.noteRange.first;
     this.keyReferences[index].current.simulateOnTouchEnd();
   }
 
@@ -81,7 +91,7 @@ class Piano extends Component {
           this.getMidiNumbers().map(midiNumber => {
             const { isAccidental } = MidiNumbers.getAttributes(midiNumber);
             return (
-              <Key ref={this.keyReferences[midiNumber-60]}
+              <Key ref={this.keyReferences[midiNumber-this.state.noteRange.first]}
                 naturalKeyWidth={ naturalKeyWidth }
                 midiNumber={ midiNumber }
                 noteRange={ this.state.noteRange }
@@ -101,7 +111,7 @@ class Piano extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 140,
+    height: 100,
     position: 'relative', 
     backgroundColor: 'transparent', 
   }

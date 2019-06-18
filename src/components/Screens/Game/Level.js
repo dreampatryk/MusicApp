@@ -8,10 +8,6 @@ import TutorialTexts from "../../../styles/Texts/TutorialTexts";
 import Piano from '../../Piano/Piano';
 
 export default class Level extends Component {
-    onPlay = (name, number) => {};
-
-    onStop = (name, number) => {};
-
     state = {
         noteIndex: 0,
     };
@@ -19,12 +15,16 @@ export default class Level extends Component {
     notes       = this.props.navigation.getParam('notes', []);
     pianoElement = React.createRef();
 
+    onPlay = (note) => this.pianoElement.current.simulateOnTouchStart(note);
+
+    onStop = (note) => this.pianoElement.current.simulateOnTouchEnd(note);
+
     render() {
         const {navigation} = this.props;
         return (
             <View style={styles.container}>
-                <View style={{width: 100, height: 100, backgroundColor: 'red'}} onTouchStart={() => this.pianoElement.current.simulateOnTouchStart(0)} onTouchEnd={() => this.pianoElement.current.simulateOnTouchEnd(0)}/>
-                <Piano ref={this.pianoElement} noteRange={{first: 'c4', last: 'e5'}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}></Piano>
+                <View style={{width: 100, height: 100, backgroundColor: 'red'}} onTouchStart={() => this.onPlay('c4')} onTouchEnd={() => this.onStop('c4')}/>
+                <Piano ref={this.pianoElement} noteRange={{first: 'c4', last: 'c6'}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}></Piano>
             </View>
         );
     }

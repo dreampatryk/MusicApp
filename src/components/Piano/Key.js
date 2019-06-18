@@ -116,7 +116,7 @@ function ratioToPercentage(ratio) {
 const styles = StyleSheet.create({
   ReactPiano__Key: {
     position: 'absolute',
-    height: 140,
+    height: 100,
   },
   ReactPiano__Key__natural: {
     backgroundColor: '#f6f5f3',
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
     borderBottomRightRadius: 4
   },
   ReactPiano__Key__accidental: {
-    height: 100,
+    height: 60,
     backgroundColor: '#555',
     borderColor: 'transparent',
     borderWidth: 1,
