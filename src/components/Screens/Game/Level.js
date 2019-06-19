@@ -26,7 +26,7 @@ export default class Level extends Component {
         return (
             <View style={styles.container}>
                 <View style={{width: 100, height: 100, backgroundColor: 'red'}} onTouchStart={() => this.onPlay('c4')} onTouchEnd={() => this.onStop('c4')}/>
-                <Piano ref={this.pianoElement} noteRange={{first: 'c4', last: 'c6'}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}></Piano>
+                <Piano ref={this.pianoElement} noteRange={{first: 'c4', last: 'c#6'}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}></Piano>
             </View>
         );
     }
