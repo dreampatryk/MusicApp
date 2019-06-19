@@ -7,6 +7,8 @@ import TutorialButton from "../../Buttons/TutorialButton";
 import TutorialTexts from "../../../styles/Texts/TutorialTexts";
 import Piano from '../../Piano/Piano';
 
+
+
 export default class Level extends Component {
     state = {
         noteIndex: 0,
