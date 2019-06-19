@@ -15,7 +15,7 @@ class Piano extends Component {
       first: MidiNumbers.fromNote('c4'),
       last: MidiNumbers.fromNote('e5')
     }
-  }
+  };
 
   static propTypes = {
     onPlayNoteInput: PropTypes.func.isRequired,
@@ -23,7 +23,7 @@ class Piano extends Component {
   };
 
   componentDidMount() {
-    const { noteRange } = this.props
+    const { noteRange } = this.props;
 
     this.setState({
       ...this.state,

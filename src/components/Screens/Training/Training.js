@@ -3,6 +3,7 @@ import {Platform, StyleSheet, Text, View, TouchableOpacity, ImageBackground} fro
 import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
+import GoBackHeader from "../../Others/GoBackHeader";
 
 export default class Training extends Component {
     render() {
@@ -10,8 +11,8 @@ export default class Training extends Component {
         return (
             <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')}
                              style={{width: '100%', height: '100%', position: 'relative'}}>
-                <View style={styles.container}>
-                    <MenuButton text='Go back to main screen' onPress={() => this.props.navigation.goBack()}/>
+                <View style={{height: '15%', alignItems: 'center', justifyContent: 'flex-end'}}>
+                    <GoBackHeader  text="Go back to main menu" onPress={() => this.props.navigation.goBack()}/>
                 </View>
             </ImageBackground>
         );

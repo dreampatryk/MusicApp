@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import { Platform, StyleSheet, Text, View, ImageBackground, ScrollView } from 'react-native';
 import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
+import GoBackHeader from "../../Others/GoBackHeader";
 
 export default class TutorialMenu extends Component {
 
@@ -38,13 +39,20 @@ export default class TutorialMenu extends Component {
         {reqTable: this.images3, text: "Lesson 3"},
         {reqTable: this.images4, text: "Lesson 4"},
         {reqTable: this.images5, text: "Lesson 5"},
+        {reqTable: this.images5, text: "Lesson 5"},
+        {reqTable: this.images5, text: "Lesson 5"},
+        {reqTable: this.images5, text: "Lesson 5"},
+        {reqTable: this.images5, text: "Lesson 5"},
+        {reqTable: this.images5, text: "Lesson 5"},
     ];
     renderMenuButtons() {
         return this.images.map((item, key) => {
             return(
-                <MenuButton  text={item.text}  key={key}
+                <View  key={key}>
+                <MenuButton  text={item.text}
                              onPress={() => this.props.navigation.navigate('Tutorial',
                     {images: item.reqTable, imgLength: item.reqTable.length})}/>
+                </View>
             )
         })
     }
@@ -53,11 +61,15 @@ export default class TutorialMenu extends Component {
         return (
             <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')}
                      style={{width: '100%', height: '100%', position: 'relative'}}>
-                <View style={styles.container}>
-                    <MenuButton text='Go back to main screen' onPress={() => navigation.goBack()}/>
-                    <Text style={{color: 'red'}}>Take the lessons from first to the last. You can always go back to them.</Text>
-                    {this.renderMenuButtons()}
-                </View>
+                <ScrollView>
+                    <View style={{height: '15%', alignItems: 'center', justifyContent: 'flex-end'}}>
+                        <GoBackHeader  text="Go back to main menu" onPress={() => this.props.navigation.goBack()}/>
+                    </View>
+                    <View style={styles.container}>
+                        <Text style={{color: 'red'}}>Take the lessons from first to the last. You can always go back to them.</Text>
+                        {this.renderMenuButtons()}
+                    </View>
+                </ScrollView>
             </ImageBackground>
         );
     }

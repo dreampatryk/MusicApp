@@ -8,7 +8,7 @@ import MidiNumbers from './MidiNumbers'
 class Key extends Component {
   state = {
     touched: false
-  }
+  };
 
   static propTypes = {
     midiNumber: PropTypes.number.isRequired,
@@ -42,17 +42,17 @@ class Key extends Component {
 
   simulateOnTouchStart = () => {
     this.setState({touched: true})
-  }
+  };
 
   simulateOnTouchEnd = () => {
     this.setState({touched: false})
-  }
+  };
 
   onPlayNoteInput = () => {
     this.setState({
       ...this.state,
       touched: true
-    })
+    });
 
     this.props.onPlayNoteInput(MidiNumbers.midiToNoteName(this.props.midiNumber), this.props.midiNumber);
   };
@@ -61,7 +61,7 @@ class Key extends Component {
     this.setState({
       ...this.state,
       touched: false
-    })
+    });
 
     this.props.onStopNoteInput(MidiNumbers.midiToNoteName(this.props.midiNumber), this.props.midiNumber);
   };

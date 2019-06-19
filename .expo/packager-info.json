@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": "https://by-73y.anonymous.musicapp.exp.direct",
-  "packagerNgrokUrl": "https://packager.by-73y.anonymous.musicapp.exp.direct",
-  "ngrokPid": 30904
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

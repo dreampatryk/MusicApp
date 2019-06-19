@@ -3,6 +3,7 @@ import { Platform, StyleSheet, Text, View, ImageBackground } from 'react-native'
 import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
+import GoBackHeader from '../../Others/GoBackHeader';
 import TutorialTexts from "../../../styles/Texts/TutorialTexts";
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -39,6 +40,9 @@ export default class StartGameMenu extends Component {
         return (
             <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')} style={{width: '100%', height: '100%'}}>
                 <ScrollView>
+                    <View style={{height: '15%', alignItems: 'center', justifyContent: 'flex-end'}}>
+                        <GoBackHeader  text="Go back to main menu" onPress={() => this.props.navigation.goBack()}/>
+                    </View>
                     <View style={styles.container}>
                         <Text style={TutorialTexts.text}>Choose level</Text>
                         {this.renderMenuButtons()}
