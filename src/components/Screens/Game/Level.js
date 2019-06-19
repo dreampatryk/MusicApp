@@ -46,7 +46,7 @@ export default class Level extends Component {
         return (
             <View style={styles.container}>
                 <Board noteRange={{first: 'c4', last: 'c#6'}} startPos={0} movingVal={this.state.movingVal}/>
-                
+                <Piano ref={this.pianoElement} noteRange={{first: 'c4', last: 'c#6'}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}></Piano>
             </View>
         );
     }
