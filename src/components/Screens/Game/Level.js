@@ -7,6 +7,7 @@ import TutorialButton from "../../Buttons/TutorialButton";
 import TutorialTexts from "../../../styles/Texts/TutorialTexts";
 import Piano from '../../Piano/Piano';
 import Board from './Board';
+import GoBackHeader from "../../Others/GoBackHeader";
 
 
 
@@ -26,7 +27,7 @@ export default class Level extends Component {
     moveNotes(){
         setInterval(() => {
             //console.warn(this.state.movingVal._value)
-        }, 100)
+        }, 100);
 
         Animated.timing(
             this.state.movingVal,
@@ -43,10 +44,15 @@ export default class Level extends Component {
 
     render() {
         const {navigation} = this.props;
+        const firstNote = 'c4';
+        const lastNote = 'c#6';
         return (
             <View style={styles.container}>
-                <Board noteRange={{first: 'c4', last: 'c#6'}} startPos={0} movingVal={this.state.movingVal}/>
-                <Piano ref={this.pianoElement} noteRange={{first: 'c4', last: 'c#6'}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}></Piano>
+                <View style={{height: '15%', alignItems: 'center', justifyContent: 'flex-end'}}>
+                    <GoBackHeader  text="Go back to main menu" onPress={() => this.props.navigation.goBack()}/>
+                </View>
+                <Board noteRange={{first: firstNote, last: lastNote}} startPos={0} movingVal={this.state.movingVal}/>
+                <Piano ref={this.pianoElement} noteRange={{first: firstNote, last: lastNote}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}/>
             </View>
         );
     }

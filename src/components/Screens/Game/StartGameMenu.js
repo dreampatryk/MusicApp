@@ -22,7 +22,7 @@ export default class StartGameMenu extends Component {
         {text: 'Level 6', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'}
     ];
 
-    renderMenuButtons() {
+    renderLevelButtons() {
         return this.levels.map((item, key) => {
             return(
                 <View key={key}>
@@ -45,7 +45,7 @@ export default class StartGameMenu extends Component {
                     </View>
                     <View style={styles.container}>
                         <Text style={TutorialTexts.text}>Choose level</Text>
-                        {this.renderMenuButtons()}
+                        {this.renderLevelButtons()}
                     </View>
                 </ScrollView>
             </ImageBackground>
