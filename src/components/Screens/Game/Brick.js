@@ -66,7 +66,7 @@ class Brick extends Component {
                 top: top,
                 left: ratioToPercentage(this.getRelativeKeyPosition(midiNumber) * naturalKeyWidth),
                 width: ratioToPercentage(accidental ? accidentalWidthRatio * naturalKeyWidth : naturalKeyWidth),
-                height: ratioToPercentage(height)
+                height: height
               },
             ]}/>
         );

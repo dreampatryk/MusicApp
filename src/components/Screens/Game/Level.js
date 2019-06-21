@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, View, Animated, Dimensions } from 'react-native';
+import { Image, StyleSheet, View, Animated, Dimensions, Button } from 'react-native';
 //import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
@@ -9,12 +9,11 @@ import Piano from '../../Piano/Piano';
 import Board from './Board';
 import GoBackHeader from "../../Others/GoBackHeader";
 
-
-
 export default class Level extends Component {
     state = {
         noteIndex: 0,
-        movingVal: new Animated.Value(0)
+        movingVal: new Animated.Value(0),
+        intervalID: 0
     };
     notesLength = this.props.navigation.getParam('notesLength', 0);
     notes       = this.props.navigation.getParam('notes', []);
@@ -24,22 +23,31 @@ export default class Level extends Component {
 
     onStop = (note) => this.pianoElement.current.simulateOnTouchEnd(note);
 
-    moveNotes(){
-        setInterval(() => {
-            //console.warn(this.state.movingVal._value)
-        }, 100);
-
+    moveNotes(start){
         Animated.timing(
-            this.state.movingVal,
+            start,
             {
-                toValue: Dimensions.get('window').height,
-                duration: 3000
+                toValue: 700,
+                duration: 10000
             }
-        ).start();
+        ).start(() => {
+            clearInterval(this.state.intervalID);
+            midis.forEach(val => this.onStop(val['pitch']));
+        });
     }
 
     componentDidMount(){
-        this.moveNotes();
+        this.moveNotes(this.state.movingVal);
+        this.state.intervalID = setInterval(() => {
+            midis.forEach(val => {
+                if(val['start']*5 <= this.state.movingVal._value && val['end']*5 >= this.state.movingVal._value){
+                    this.onPlay(val['pitch']);
+                }
+                else{
+                    this.onStop(val['pitch']);
+                }
+            })
+        }, 10);
     }
 
     render() {
@@ -48,10 +56,7 @@ export default class Level extends Component {
         const lastNote = 'c#6';
         return (
             <View style={styles.container}>
-                <View style={{height: '15%', alignItems: 'center', justifyContent: 'flex-end'}}>
-                    <GoBackHeader  text="Go back to main menu" onPress={() => this.props.navigation.goBack()}/>
-                </View>
-                <Board noteRange={{first: firstNote, last: lastNote}} startPos={0} movingVal={this.state.movingVal}/>
+                <Board noteRange={{first: firstNote, last: lastNote}} startPos={0} movingVal={this.state.movingVal} midis={midis}/>
                 <Piano ref={this.pianoElement} noteRange={{first: firstNote, last: lastNote}} onPlayNoteInput = {this.onPlay} onStopNoteInput = {this.onStop}/>
             </View>
         );
@@ -60,9 +65,20 @@ export default class Level extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'flex-end',
-    flex: 1, 
+    flex: 1,
+    justifyContent: 'center',
     backgroundColor: 'black',
   }
 })
+
+const midis = [
+    {pitch: 60, start: 0, end: 10}, 
+    {pitch: 61, start: 10, end: 20}, 
+    {pitch: 65, start: 10, end: 30}, 
+    {pitch: 67, start: 30, end: 40},
+    {pitch: 79, start: 40, end: 60},
+    {pitch: 77, start: 60, end: 80},
+    {pitch: 81, start: 80, end: 120},
+    {pitch: 63, start: 80, end: 140},
+];
 

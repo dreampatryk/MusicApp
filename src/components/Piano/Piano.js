@@ -14,7 +14,8 @@ class Piano extends Component {
     noteRange: {
       first: MidiNumbers.fromNote('c4'),
       last: MidiNumbers.fromNote('e5')
-    }
+    },
+    keyReferences: []
   };
 
   static propTypes = {
@@ -30,7 +31,8 @@ class Piano extends Component {
       noteRange: {
         first: MidiNumbers.fromNote(noteRange.first),
         last: MidiNumbers.fromNote(noteRange.last)
-      }
+      },
+      keyReferences: range(MidiNumbers.fromNote(noteRange.first), MidiNumbers.fromNote(noteRange.last) + 1).map(React.createRef)
     })
   }
 
@@ -63,24 +65,20 @@ class Piano extends Component {
     return 1 / this.getNaturalKeyCount();
   }
 
-  keyReferences = this.getMidiNumbers().map(el => React.createRef());
-
   simulateOnTouchStart(note){
-    index = MidiNumbers.fromNote(note);
-    if(index < this.state.noteRange.first || index > this.state.noteRange.last)
+    if(note < this.state.noteRange.first || note > this.state.noteRange.last)
       return;
 
-    index = index - this.state.noteRange.first;
-    this.keyReferences[index].current.simulateOnTouchStart();
+    index = note - this.state.noteRange.first;
+    this.state.keyReferences[index].current.simulateOnTouchStart();
   }
 
   simulateOnTouchEnd(note){
-    index = MidiNumbers.fromNote(note);
-    if(index < this.state.noteRange.first || index > this.state.noteRange.last)
+    if(note < this.state.noteRange.first || note > this.state.noteRange.last)
       return;
-
-    index = index - this.state.noteRange.first;
-    this.keyReferences[index].current.simulateOnTouchEnd();
+    
+    index = note - this.state.noteRange.first;
+    this.state.keyReferences[index].current.simulateOnTouchEnd();
   }
 
   render() {
@@ -91,7 +89,7 @@ class Piano extends Component {
           this.getMidiNumbers().map(midiNumber => {
             const { isAccidental } = MidiNumbers.getAttributes(midiNumber);
             return (
-              <Key ref={this.keyReferences[midiNumber-this.state.noteRange.first]}
+              <Key ref={this.state.keyReferences[midiNumber-this.state.noteRange.first]}
                 naturalKeyWidth={ naturalKeyWidth }
                 midiNumber={ midiNumber }
                 noteRange={ this.state.noteRange }
@@ -111,9 +109,10 @@ class Piano extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 100,
+    flex: 0,
     position: 'relative', 
     backgroundColor: 'transparent', 
+    marginBottom: 100
   }
 })
 

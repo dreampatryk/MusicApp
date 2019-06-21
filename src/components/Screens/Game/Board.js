@@ -14,18 +14,23 @@ class Board extends Component {
     noteRange: {
       first: MidiNumbers.fromNote('c4'),
       last: MidiNumbers.fromNote('e5')
-    }
+    },
+    midis: []
   }
 
   componentDidMount() {
-    const { noteRange } = this.props
+    const { 
+      noteRange,
+      midis 
+    } = this.props
 
     this.setState({
       ...this.state,
       noteRange: {
         first: MidiNumbers.fromNote(noteRange.first),
         last: MidiNumbers.fromNote(noteRange.last)
-      }
+      },
+      midis: midis 
     })
   }
 
@@ -58,18 +63,10 @@ class Board extends Component {
     return 1 / this.getNaturalKeyCount();
   }
 
-  unitLength = 10;
-
-  midis = [
-      {pitch: 60, length: 1, time: 0}, 
-      {pitch: 61, length: 1, time: 0}, 
-      {pitch: 65, length: 2, time: 10}, 
-      {pitch: 67, length: 4, time: 30},
-      {pitch: 75, length: 1, time: 100}
-  ];
+  unitLength = 5;
 
   generateNotes(naturalKeyWidth){
-      return this.midis.map(element => {
+      return this.state.midis.map(element => {
           const pitch = element['pitch'];
           const { isAccidental } = MidiNumbers.getAttributes(pitch);
           return(                
@@ -78,8 +75,8 @@ class Board extends Component {
                 midiNumber={ pitch }
                 noteRange={ this.state.noteRange }
                 accidental={ isAccidental }
-                top = {element['time']}
-                height = {element['length'] * naturalKeyWidth}
+                top = {element['start']*this.unitLength}
+                height = {(element['end']-element['start'])*this.unitLength}
               /> 
             );
       })
@@ -88,7 +85,7 @@ class Board extends Component {
   render() {
     const naturalKeyWidth = this.getNaturalKeyWidth();
     return (
-      <Animated.View style={[styles.container, {top: this.props.startPos, transform: [{translateY: this.props.movingVal}]}]}>
+      <Animated.View style={[styles.container, {top: this.props.startPos, transform: [{translateY: this.props.movingVal}, {rotateX: '180deg'}]}]}>
           {this.generateNotes(naturalKeyWidth)}
       </Animated.View>
     )
