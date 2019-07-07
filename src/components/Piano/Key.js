@@ -41,11 +41,11 @@ class Key extends Component {
   };
 
   simulateOnTouchStart = () => {
-    this.setState({touched: true})
+    this.setState({...this.state, touched: true})
   };
 
   simulateOnTouchEnd = () => {
-    this.setState({touched: false})
+    this.setState({...this.state, touched: false})
   };
 
   onPlayNoteInput = () => {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, View, Animated, Dimensions, Button } from 'react-native';
-//import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
 import TutorialButton from "../../Buttons/TutorialButton";
@@ -9,11 +8,14 @@ import Piano from '../../Piano/Piano';
 import Board from './Board';
 import GoBackHeader from "../../Others/GoBackHeader";
 
+import range from 'just-range'
+
 export default class Level extends Component {
     state = {
         noteIndex: 0,
         movingVal: new Animated.Value(0),
-        intervalID: 0
+        intervalID: 0,
+        started: false
     };
     notesLength = this.props.navigation.getParam('notesLength', 0);
     notes       = this.props.navigation.getParam('notes', []);
@@ -21,14 +23,14 @@ export default class Level extends Component {
 
     onPlay = (note) => this.pianoElement.current.simulateOnTouchStart(note);
 
-    onStop = (note) => this.pianoElement.current.simulateOnTouchEnd(note);
+    onStop = async (note) => await this.pianoElement.current.simulateOnTouchEnd(note);
 
     moveNotes(start){
         Animated.timing(
             start,
             {
                 toValue: 700,
-                duration: 10000
+                duration: 30000
             }
         ).start(() => {
             clearInterval(this.state.intervalID);
@@ -37,17 +39,28 @@ export default class Level extends Component {
     }
 
     componentDidMount(){
-        this.moveNotes(this.state.movingVal);
+        midisMap = range(0, 141).map(() => [])
+        midis.forEach(element => {
+            for(i = element['start']; i < element['end']; i++){
+                midisMap[i].push(element['pitch'])
+            }
+        })
+
+        previous = [...midisMap[0]]
+
         this.state.intervalID = setInterval(() => {
-            midis.forEach(val => {
-                if(val['start']*5 <= this.state.movingVal._value && val['end']*5 >= this.state.movingVal._value){
-                    this.onPlay(val['pitch']);
-                }
-                else{
-                    this.onStop(val['pitch']);
-                }
-            })
+            index = Math.trunc((this.state.movingVal._value)/5)
+
+            if(previous.toString() !== midisMap[index].toString()){
+                //[...previous].forEach(note => this.onStop(note))
+                console.log(previous)
+                previous = [...midisMap[index]];
+            }
+
+            midisMap[index].forEach(note => this.onPlay(note))
         }, 10);
+
+        this.moveNotes(this.state.movingVal);
     }
 
     render() {
