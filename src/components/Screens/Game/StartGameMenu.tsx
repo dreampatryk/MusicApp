@@ -1,13 +1,16 @@
-import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, ImageBackground } from 'react-native';
+import React from 'react';
+import { Text, View, ImageBackground } from 'react-native';
 import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
 import TutorialTexts from "../../../styles/Texts/TutorialTexts";
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default class StartGameMenu extends Component {
+interface Props {
+    navigation: Navigation;
+}
 
+export default class StartGameMenu extends React.Component<Props> {
 
     levels=[
         {text: 'Level 1', notes: 'tutaj powinny byc nuty', difficulty: 'w sumie można takie coś zrobić :V'},
@@ -35,7 +38,6 @@ export default class StartGameMenu extends Component {
     }
 
     render() {
-        const {navigate} = this.props.navigation;
         return (
             <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')} style={{width: '100%', height: '100%'}}>
                 <ScrollView>

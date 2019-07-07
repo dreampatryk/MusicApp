@@ -17,7 +17,6 @@ interface State {
 
 export default class Tutorial extends React.Component<Props, State> {
 
-    props : Props;
     state : State = {
         pictureIndex: 0,
     };
