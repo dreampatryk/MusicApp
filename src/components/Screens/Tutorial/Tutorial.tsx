@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Image, StyleSheet, Text, View, Button } from 'react-native';
 import styles from '../../../styles/Menu/MenuMainStyle'
 
@@ -7,13 +7,22 @@ import TutorialButton from "../../Buttons/TutorialButton";
 import TutorialTexts from "../../../styles/Texts/TutorialTexts";
 import {ScrollView} from "react-native-gesture-handler";
 
-export default class Tutorial extends Component {
+interface Props  {
+    navigation: Navigation,
+}
 
-    state = {
+interface State {
+    pictureIndex: number,
+}
+
+export default class Tutorial extends React.Component<Props, State> {
+
+    props : Props;
+    state : State = {
         pictureIndex: 0,
     };
-    imgLength = this.props.navigation.getParam('imgLength', 0);
-    images    = this.props.navigation.getParam('images', []);
+    imgLength : number = this.props.navigation.getParam('imgLength', 0);
+    images : any = this.props.navigation.getParam('images', []);
 
     nextPicture = () => {
         if(this.state.pictureIndex < this.imgLength - 1) {

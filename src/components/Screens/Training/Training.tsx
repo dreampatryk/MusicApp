@@ -1,12 +1,11 @@
-import React, { Component } from 'react';
-import {Platform, StyleSheet, Text, View, TouchableOpacity, ImageBackground} from 'react-native';
-import styles from '../../../styles/Menu/MenuMainStyle'
+import React from 'react';
+import { View, ImageBackground} from 'react-native';
 
-import MenuButton from '../../Buttons/MenuButton';
-
-export default class Training extends Component {
+interface Props {
+    navigation: Navigation,
+}
+export default class Training extends React.Component<Props> {
     render() {
-        const {navigate} = this.props.navigation;
         return (
             <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')}
                              style={{width: '100%', height: '100%', position: 'relative'}}>

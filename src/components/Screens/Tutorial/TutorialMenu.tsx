@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Platform, StyleSheet, Text, View, ImageBackground, ScrollView } from 'react-native';
 import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
 
-export default class TutorialMenu extends Component {
+export default class TutorialMenu extends React.Component {
 
     images1 = [
         {req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg')},
