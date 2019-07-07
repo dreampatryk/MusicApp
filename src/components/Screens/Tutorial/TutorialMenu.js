@@ -3,7 +3,6 @@ import { Platform, StyleSheet, Text, View, ImageBackground, ScrollView } from 'r
 import styles from '../../../styles/Menu/MenuMainStyle'
 
 import MenuButton from '../../Buttons/MenuButton';
-import GoBackHeader from "../../Others/GoBackHeader";
 
 export default class TutorialMenu extends Component {
 
@@ -62,9 +61,6 @@ export default class TutorialMenu extends Component {
             <ImageBackground source={require('../../../static/backgroundImages/pianoMain.jpg')}
                      style={{width: '100%', height: '100%', position: 'relative'}}>
                 <ScrollView>
-                    <View style={{height: '15%', alignItems: 'center', justifyContent: 'flex-end'}}>
-                        <GoBackHeader  text="Go back to main menu" onPress={() => this.props.navigation.goBack()}/>
-                    </View>
                     <View style={styles.container}>
                         <Text style={{color: 'red'}}>Take the lessons from first to the last. You can always go back to them.</Text>
                         {this.renderMenuButtons()}

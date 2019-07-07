@@ -5,7 +5,6 @@ import styles from '../../../styles/Menu/MenuMainStyle'
 import MenuButton from '../../Buttons/MenuButton';
 import TutorialButton from "../../Buttons/TutorialButton";
 import TutorialTexts from "../../../styles/Texts/TutorialTexts";
-import GoBackHeader from "../../Others/GoBackHeader";
 import {ScrollView} from "react-native-gesture-handler";
 
 export default class Tutorial extends Component {
@@ -37,7 +36,6 @@ export default class Tutorial extends Component {
         return (
             <View>
                 <View style={{height: '20%', alignItems: 'center', justifyContent: 'space-around'}}>
-                    <GoBackHeader  text="Go back to tutorials' menu" onPress={() => this.props.navigation.goBack()}/>
                     <Text style={TutorialTexts.text}>Slides left: {this.imgLength - this.state.pictureIndex - 1}</Text>
                 </View>
                 <Image source={this.images[this.state.pictureIndex].req} style={{width: '100%', height: '70%'}}/>

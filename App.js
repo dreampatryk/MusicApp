@@ -16,7 +16,15 @@ const MainNavigator = createStackNavigator({
   Level: {screen: Level}
 },
 {
-  headerMode: 'none'
+  defaultNavigationOptions: {
+    headerStyle: {
+      backgroundColor: 'red',
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    }
+  }
 });
 
 const App = createAppContainer(MainNavigator);

@@ -7,7 +7,6 @@ import TutorialButton from "../../Buttons/TutorialButton";
 import TutorialTexts from "../../../styles/Texts/TutorialTexts";
 import Piano from '../../Piano/Piano';
 import Board from './Board';
-import GoBackHeader from "../../Others/GoBackHeader";
 
 export default class Level extends Component {
     state = {
