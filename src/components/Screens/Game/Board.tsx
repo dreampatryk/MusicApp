@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 
 import { StyleSheet, View, Animated } from 'react-native'
 
@@ -8,8 +7,20 @@ import range from 'just-range'
 import MidiNumbers from '../../Piano/MidiNumbers'
 
 import Brick from './Brick'
+import { AnimatedValue } from 'react-navigation'
 
-class Board extends Component {
+interface Props {
+  noteRange: any,
+  startPos: number,
+  movingVal: AnimatedValue,
+  midis: Array<any>
+}
+
+interface State {
+  noteRange: any,
+  midis: Array<any>
+}
+export default class Board extends Component<Props, State> {
   state = {
     noteRange: {
       first: MidiNumbers.fromNote('c4'),
@@ -18,38 +29,39 @@ class Board extends Component {
     midis: []
   }
 
+  unitLength = 5;
+
   componentDidMount() {
-    const { 
+    const {
       noteRange,
-      midis 
+      midis
     } = this.props
 
     this.setState({
-      ...this.state,
       noteRange: {
         first: MidiNumbers.fromNote(noteRange.first),
         last: MidiNumbers.fromNote(noteRange.last)
       },
-      midis: midis 
+      midis: midis
     })
   }
 
   getNaturalKeyCount() {
-    return this.getMidiNumbers().filter((number) => {
+    return this.getMidiNumbers().filter((number: number) => {
       const { isAccidental } = MidiNumbers.getAttributes(number);
       return !isAccidental;
     }).length;
   }
 
   getNaturalKeys() {
-    return this.getMidiNumbers().filter((number) => {
+    return this.getMidiNumbers().filter((number: number) => {
       const { isAccidental } = MidiNumbers.getAttributes(number);
       return !isAccidental;
     });
   }
 
   getAccidentalKeys() {
-    return this.getMidiNumbers().filter((number) => {
+    return this.getMidiNumbers().filter((number: number) => {
       const { isAccidental } = MidiNumbers.getAttributes(number);
       return isAccidental;
     });
@@ -63,30 +75,28 @@ class Board extends Component {
     return 1 / this.getNaturalKeyCount();
   }
 
-  unitLength = 5;
-
-  generateNotes(naturalKeyWidth){
-      return this.state.midis.map(element => {
-          const pitch = element['pitch'];
-          const { isAccidental } = MidiNumbers.getAttributes(pitch);
-          return(                
-            <Brick
-                naturalKeyWidth={ naturalKeyWidth }
-                midiNumber={ pitch }
-                noteRange={ this.state.noteRange }
-                accidental={ isAccidental }
-                top = {element['start']*this.unitLength}
-                height = {(element['end']-element['start'])*this.unitLength}
-              /> 
-            );
-      })
+  generateNotes(naturalKeyWidth: number) {
+    return this.state.midis.map(element => {
+      const pitch = element['pitch'];
+      const { isAccidental } = MidiNumbers.getAttributes(pitch);
+      return (
+        <Brick
+          naturalKeyWidth={naturalKeyWidth}
+          midiNumber={pitch}
+          noteRange={this.state.noteRange}
+          accidental={isAccidental}
+          top={element['start'] * this.unitLength}
+          height={(element['end'] - element['start']) * this.unitLength}
+        />
+      );
+    })
   }
 
   render() {
     const naturalKeyWidth = this.getNaturalKeyWidth();
     return (
-      <Animated.View style={[styles.container, {top: this.props.startPos, transform: [{translateY: this.props.movingVal}, {rotateX: '180deg'}]}]}>
-          {this.generateNotes(naturalKeyWidth)}
+      <Animated.View style={[styles.container, { top: this.props.startPos, transform: [{ translateY: this.props.movingVal }, { rotateX: '180deg' }] }]}>
+        {this.generateNotes(naturalKeyWidth)}
       </Animated.View>
     )
   }
@@ -95,9 +105,7 @@ class Board extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative', 
-    backgroundColor: 'transparent', 
+    position: 'relative',
+    backgroundColor: 'transparent',
   }
 })
-
-export default Board;

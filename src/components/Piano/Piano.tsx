@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, RefObject } from 'react'
 import PropTypes from 'prop-types'
 
 import { StyleSheet, View, Button } from 'react-native'
@@ -9,13 +9,24 @@ import Key from './Key'
 
 import MidiNumbers from './MidiNumbers'
 
-class Piano extends Component {
+interface Props {
+  noteRange: any,
+  onPlayNoteInput: Function,
+  onStopNoteInput: Function
+}
+
+interface State {
+  noteRange: any,
+  keyReferences: RefObject<Key>[],
+}
+
+class Piano extends Component<Props, State> {
   state = {
     noteRange: {
       first: MidiNumbers.fromNote('c4'),
       last: MidiNumbers.fromNote('e5')
     },
-    keyReferences: []
+    keyReferences: new Array()
   };
 
   static propTypes = {
@@ -27,7 +38,6 @@ class Piano extends Component {
     const { noteRange } = this.props;
 
     this.setState({
-      ...this.state,
       noteRange: {
         first: MidiNumbers.fromNote(noteRange.first),
         last: MidiNumbers.fromNote(noteRange.last)
@@ -37,21 +47,21 @@ class Piano extends Component {
   }
 
   getNaturalKeyCount() {
-    return this.getMidiNumbers().filter((number) => {
+    return this.getMidiNumbers().filter((number: number) => {
       const { isAccidental } = MidiNumbers.getAttributes(number);
       return !isAccidental;
     }).length;
   }
 
   getNaturalKeys() {
-    return this.getMidiNumbers().filter((number) => {
+    return this.getMidiNumbers().filter((number: number) => {
       const { isAccidental } = MidiNumbers.getAttributes(number);
       return !isAccidental;
     });
   }
 
   getAccidentalKeys() {
-    return this.getMidiNumbers().filter((number) => {
+    return this.getMidiNumbers().filter((number: number) => {
       const { isAccidental } = MidiNumbers.getAttributes(number);
       return isAccidental;
     });
@@ -65,40 +75,40 @@ class Piano extends Component {
     return 1 / this.getNaturalKeyCount();
   }
 
-  simulateOnTouchStart(note){
-    if(note < this.state.noteRange.first || note > this.state.noteRange.last)
+  simulateOnTouchStart(note: number) {
+    if (note < this.state.noteRange.first || note > this.state.noteRange.last)
       return;
 
-    index = note - this.state.noteRange.first;
+    let index = note - this.state.noteRange.first;
     this.state.keyReferences[index].current.simulateOnTouchStart();
   }
 
-  simulateOnTouchEnd(note){
-    if(note < this.state.noteRange.first || note > this.state.noteRange.last)
+  simulateOnTouchEnd(note: number) {
+    if (note < this.state.noteRange.first || note > this.state.noteRange.last)
       return;
-    
-    index = note - this.state.noteRange.first;
+
+    let index = note - this.state.noteRange.first;
     this.state.keyReferences[index].current.simulateOnTouchEnd();
   }
 
   render() {
     const naturalKeyWidth = this.getNaturalKeyWidth();
     return (
-      <View style={ styles.container}>
+      <View style={styles.container}>
         {
-          this.getMidiNumbers().map(midiNumber => {
+          this.getMidiNumbers().map((midiNumber: number) => {
             const { isAccidental } = MidiNumbers.getAttributes(midiNumber);
             return (
-              <Key ref={this.state.keyReferences[midiNumber-this.state.noteRange.first]}
-                naturalKeyWidth={ naturalKeyWidth }
-                midiNumber={ midiNumber }
-                noteRange={ this.state.noteRange }
-                accidental={ isAccidental }
-                onPlayNoteInput={ this.props.onPlayNoteInput }
-                onStopNoteInput={ this.props.onStopNoteInput }
-                useTouchEvents={ true }
-                key={ midiNumber }
-              />                  
+              <Key ref={this.state.keyReferences[midiNumber - this.state.noteRange.first]}
+                naturalKeyWidth={naturalKeyWidth}
+                midiNumber={midiNumber}
+                noteRange={this.state.noteRange}
+                accidental={isAccidental}
+                onPlayNoteInput={this.props.onPlayNoteInput}
+                onStopNoteInput={this.props.onStopNoteInput}
+                useTouchEvents={true}
+                key={midiNumber}
+              />
             )
           })
         }
@@ -110,8 +120,8 @@ class Piano extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 0,
-    position: 'relative', 
-    backgroundColor: 'transparent', 
+    position: 'relative',
+    backgroundColor: 'transparent',
     marginBottom: 100
   }
 })

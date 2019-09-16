@@ -1,25 +1,25 @@
 import range from 'just-range';
 
-const SORTED_PITCHES = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
-const ACCIDENTAL_PITCHES = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
-const PITCH_INDEXES = {
-  C: 0,
+const SORTED_PITCHES: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const ACCIDENTAL_PITCHES: string[] = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
+const PITCH_INDEXES: { [id: string]: number } = {
+  'C': 0,
   'C#': 1,
-  Db: 1,
-  D: 2,
+  'Db': 1,
+  'D': 2,
   'D#': 3,
-  Eb: 3,
-  E: 4,
-  F: 5,
+  'Eb': 3,
+  'E': 4,
+  'F': 5,
   'F#': 6,
-  Gb: 6,
-  G: 7,
+  'Gb': 6,
+  'G': 7,
   'G#': 8,
-  Ab: 8,
-  A: 9,
+  'Ab': 8,
+  'A': 9,
   'A#': 10,
-  Bb: 10,
-  B: 11,
+  'Bb': 10,
+  'B': 11,
 };
 const MIDI_NUMBER_C0 = 12;
 const MIN_MIDI_NUMBER = MIDI_NUMBER_C0;
@@ -34,7 +34,7 @@ const NOTES_IN_OCTAVE = 12;
 // References:
 // - http://www.flutopedia.com/octave_notation.htm
 // - https://github.com/danigb/tonal/blob/master/packages/note/index.js
-function fromNote(note) {
+function fromNote(note: String) {
   if (!note) {
     throw Error('Invalid note argument');
   }
@@ -54,7 +54,7 @@ function fromNote(note) {
 //
 // Build cache for getAttributes
 //
-function buildMidiNumberAttributes(midiNumber) {
+function buildMidiNumberAttributes(midiNumber: number) {
   const pitchIndex = (midiNumber - MIDI_NUMBER_C0) % NOTES_IN_OCTAVE;
   const octave = Math.floor((midiNumber - MIDI_NUMBER_C0) / NOTES_IN_OCTAVE);
   const pitchName = SORTED_PITCHES[pitchIndex];
@@ -68,7 +68,7 @@ function buildMidiNumberAttributes(midiNumber) {
 }
 
 function buildMidiNumberAttributesCache() {
-  return range(MIN_MIDI_NUMBER, MAX_MIDI_NUMBER + 1).reduce((cache, midiNumber) => {
+  return range(MIN_MIDI_NUMBER, MAX_MIDI_NUMBER + 1).reduce((cache: any, midiNumber: number) => {
     cache[midiNumber] = buildMidiNumberAttributes(midiNumber);
     return cache;
   }, {});
@@ -78,7 +78,7 @@ const midiNumberAttributesCache = buildMidiNumberAttributesCache();
 
 // Returns an object containing various attributes for a given MIDI number.
 // Throws error for invalid midiNumbers.
-function getAttributes(midiNumber) {
+function getAttributes(midiNumber: number) {
   const attrs = midiNumberAttributesCache[midiNumber];
   if (!attrs) {
     throw Error('Invalid MIDI number');
@@ -88,7 +88,7 @@ function getAttributes(midiNumber) {
 
 // Returns all MIDI numbers corresponding to natural notes, e.g. C and not C# or Bb.
 const NATURAL_MIDI_NUMBERS = range(MIN_MIDI_NUMBER, MAX_MIDI_NUMBER + 1).filter(
-  (midiNumber) => !getAttributes(midiNumber).isAccidental,
+  (midiNumber: number) => !getAttributes(midiNumber).isAccidental,
 );
 
 const SHARPS = 'C C# D D# E F F# G G# A A# B'.split(' ')
@@ -111,7 +111,7 @@ const FLATS = 'C Db D Eb E F Gb G Ab A Bb B'.split(' ')
  * // it rounds to nearest note
  * midiToNoteName(61.7) // => "D4"
  */
-function midiToNoteName(midi, options = { sharps: true }) {
+function midiToNoteName(midi: number, options: { pitchClass?: boolean, sharps: boolean } = { sharps: true }) {
   midi = Math.round(midi)
   const pcs = options.sharps === true ? SHARPS : FLATS
   const pc = pcs[midi % 12]

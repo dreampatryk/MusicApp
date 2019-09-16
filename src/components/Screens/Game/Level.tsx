@@ -19,9 +19,16 @@ export default class Level extends React.Component<Props, State> {
     movingVal: new Animated.Value(0),
     intervalID: 0,
   };
+
+  firstNote = 'c4';
+  lastNote = 'c#6';
   notesLength: number = this.props.navigation.getParam('notesLength', 0);
   notes: any = this.props.navigation.getParam('notes', []);
-  pianoElement: any = React.createRef();
+  pianoElement: any = <Piano
+    noteRange={{ first: this.firstNote, last: this.lastNote }}
+    onPlayNoteInput={() => { }}
+    onStopNoteInput={() => { }}
+  />
 
   onPlay = (note: any) => this.pianoElement.current.simulateOnTouchStart(note);
 
@@ -60,17 +67,12 @@ export default class Level extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <Board
-          noteRange={{ first: firstNote, last: lastNote }}
+          noteRange={{ first: this.firstNote, last: this.lastNote }}
           startPos={0}
           movingVal={this.state.movingVal}
           midis={midis}
         />
-        <Piano
-          ref={this.pianoElement}
-          noteRange={{ first: firstNote, last: lastNote }}
-          onPlayNoteInput={this.onPlay}
-          onStopNoteInput={this.onStop}
-        />
+        {this.pianoElement}
       </View>
     );
   }

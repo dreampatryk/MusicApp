@@ -5,7 +5,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native'
 
 import MidiNumbers from './MidiNumbers'
 
-class Key extends Component {
+class Key extends React.Component<any> {
   state = {
     touched: false
   };
@@ -41,11 +41,11 @@ class Key extends Component {
   };
 
   simulateOnTouchStart = () => {
-    this.setState({touched: true})
+    this.setState({ touched: true })
   };
 
   simulateOnTouchEnd = () => {
-    this.setState({touched: false})
+    this.setState({ touched: false })
   };
 
   onPlayNoteInput = () => {
@@ -95,15 +95,15 @@ class Key extends Component {
     const { touched } = this.state;
     return (
       <View
-        style={[ styles.ReactPiano__Key,
-          accidental ? styles.ReactPiano__Key__accidental : styles.ReactPiano__Key__natural, 
-          {
-            left: ratioToPercentage(this.getRelativeKeyPosition(midiNumber) * naturalKeyWidth),
-            width: ratioToPercentage(accidental ? accidentalWidthRatio * naturalKeyWidth : naturalKeyWidth)
-          },
-          touched && styles.ReactPiano__Key__active]}
+        style={[styles.ReactPiano__Key,
+        accidental ? styles.ReactPiano__Key__accidental : styles.ReactPiano__Key__natural,
+        {
+          left: ratioToPercentage(this.getRelativeKeyPosition(midiNumber) * naturalKeyWidth),
+          width: ratioToPercentage(accidental ? accidentalWidthRatio * naturalKeyWidth : naturalKeyWidth)
+        },
+        touched && styles.ReactPiano__Key__active]}
       >
-        <View style={ styles.ReactPiano__NoteLabelContainer }>{children}</View>
+        <View style={styles.ReactPiano__NoteLabelContainer}>{children}</View>
       </View>
     );
   }
