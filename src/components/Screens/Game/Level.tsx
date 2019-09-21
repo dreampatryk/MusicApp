@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { RefObject } from 'react';
 import { StyleSheet, View, Animated } from 'react-native';
 
 import Piano from '../../Piano/Piano';
 import Board from './Board';
+import range from 'just-range'
 
 interface Props {
   navigation: Navigation;
@@ -20,22 +21,20 @@ export default class Level extends React.Component<Props, State> {
     intervalID: 0,
   };
 
+  brickUnitLength = 5;
+  intervalID = 0;
   firstNote = 'c4';
   lastNote = 'c#6';
   notesLength: number = this.props.navigation.getParam('notesLength', 0);
   notes: any = this.props.navigation.getParam('notes', []);
-  pianoElement: any = <Piano
-    noteRange={{ first: this.firstNote, last: this.lastNote }}
-    onPlayNoteInput={() => { }}
-    onStopNoteInput={() => { }}
-  />
+  pianoElement: RefObject<Piano> = React.createRef();
 
-  onPlay = (note: any) => this.pianoElement.current.simulateOnTouchStart(note);
+  onPlay = (note: number) => this.pianoElement.current.simulateOnTouchStart(note);
 
-  onStop = (note: any) => this.pianoElement.current.simulateOnTouchEnd(note);
+  onStop = (note: number) => this.pianoElement.current.simulateOnTouchEnd(note);
 
-  moveNotes(start: any) {
-    Animated.timing(start, {
+  moveNotes() {
+    Animated.timing(this.state.movingVal, {
       toValue: 700,
       duration: 10000,
     }).start(() => {
@@ -45,34 +44,44 @@ export default class Level extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    this.moveNotes(this.state.movingVal);
-    this.state.intervalID = setInterval(() => {
-      midis.forEach(val => {
-        if (
-          val['start'] * 5 <= this.state.movingVal._value &&
-          val['end'] * 5 >= this.state.movingVal._value
-        ) {
-          this.onPlay(val['pitch']);
-        } else {
-          this.onStop(val['pitch']);
-        }
-      });
+    let midisMap = range(0, 141).map(() => [])
+    midis.forEach(element => {
+      for (let i = element['start']; i < element['end']; i++) {
+        midisMap[i].push(element['pitch'])
+      }
+    })
+
+    let previous: Array<number> = []
+
+    this.intervalID = setInterval(() => {
+      let midiIndex = Math.trunc(this.state.movingVal._value / this.brickUnitLength);
+
+      if (previous.toString() !== midisMap[midiIndex].toString()) {
+        previous.forEach(note => this.onStop(note))
+        previous = midisMap[midiIndex];
+        midisMap[midiIndex].forEach((note: number) => this.onPlay(note))
+      }
     }, 10);
+
+    this.moveNotes();
   }
 
   render() {
     const { navigation } = this.props;
-    const firstNote = 'c4';
-    const lastNote = 'c#6';
     return (
       <View style={styles.container}>
         <Board
+          unitLength={this.brickUnitLength}
           noteRange={{ first: this.firstNote, last: this.lastNote }}
           startPos={0}
           movingVal={this.state.movingVal}
           midis={midis}
         />
-        {this.pianoElement}
+        <Piano
+          ref={this.pianoElement}
+          noteRange={{ first: this.firstNote, last: this.lastNote }}
+          onPlayNoteInput={() => { }}
+          onStopNoteInput={() => { }} />
       </View>
     );
   }

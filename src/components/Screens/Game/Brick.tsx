@@ -1,10 +1,8 @@
-import React, { Component } from 'react'
-
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
-
+import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import MidiNumbers from '../../Piano/MidiNumbers';
-import { Node } from '@babel/core';
-import { Dictionary } from 'lodash';
+
+
 
 interface Props {
   midiNumber: number,
@@ -12,11 +10,13 @@ interface Props {
   accidental: Boolean,
   noteRange: any,
   top: number,
-  height: number
+  height: number,
+  pitchPositions: { [id: string]: number },
+  accidentalWidthRatio: number
 }
 
 export default class Brick extends Component<Props> {
-  static defaultProps = {
+  public static defaultProps = {
     accidentalWidthRatio: 0.65,
     pitchPositions: {
       C: 0,

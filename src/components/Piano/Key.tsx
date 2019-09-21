@@ -1,25 +1,25 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { Node } from '@babel/types';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import MidiNumbers from './MidiNumbers';
 
-import { StyleSheet, View, TouchableOpacity } from 'react-native'
 
-import MidiNumbers from './MidiNumbers'
 
-class Key extends React.Component<any> {
+interface Props {
+  midiNumber: number,
+  naturalKeyWidth: number, // Width as a ratio between 0 and 1
+  useTouchEvents: boolean,
+  accidental: boolean,
+  onPlayNoteInput: Function,
+  onStopNoteInput: Function,
+  pitchPositions: { [id: string]: number },
+  accidentalWidthRatio: number,
+  noteRange: any
+}
+
+class Key extends React.Component<Props> {
   state = {
     touched: false
-  };
-
-  static propTypes = {
-    midiNumber: PropTypes.number.isRequired,
-    naturalKeyWidth: PropTypes.number.isRequired, // Width as a ratio between 0 and 1
-    useTouchEvents: PropTypes.bool.isRequired,
-    accidental: PropTypes.bool.isRequired,
-    onPlayNoteInput: PropTypes.func.isRequired,
-    onStopNoteInput: PropTypes.func.isRequired,
-    accidentalWidthRatio: PropTypes.number.isRequired,
-    pitchPositions: PropTypes.object.isRequired,
-    children: PropTypes.node,
   };
 
   static defaultProps = {
@@ -67,7 +67,7 @@ class Key extends React.Component<any> {
   };
 
   // Key position is represented by the number of natural key widths from the left
-  getAbsoluteKeyPosition(midiNumber) {
+  getAbsoluteKeyPosition(midiNumber: number) {
     const OCTAVE_WIDTH = 7;
     const { octave, pitchName } = MidiNumbers.getAttributes(midiNumber);
     const pitchPosition = this.props.pitchPositions[pitchName];
@@ -75,7 +75,7 @@ class Key extends React.Component<any> {
     return pitchPosition + octavePosition;
   }
 
-  getRelativeKeyPosition(midiNumber) {
+  getRelativeKeyPosition(midiNumber: number) {
     return (
       this.getAbsoluteKeyPosition(midiNumber) -
       this.getAbsoluteKeyPosition(this.props.noteRange.first)
@@ -109,7 +109,7 @@ class Key extends React.Component<any> {
   }
 }
 
-function ratioToPercentage(ratio) {
+function ratioToPercentage(ratio: number) {
   return `${ratio * 100}%`;
 }
 

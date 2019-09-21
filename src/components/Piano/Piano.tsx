@@ -107,7 +107,6 @@ class Piano extends Component<Props, State> {
                 onPlayNoteInput={this.props.onPlayNoteInput}
                 onStopNoteInput={this.props.onStopNoteInput}
                 useTouchEvents={true}
-                key={midiNumber}
               />
             )
           })

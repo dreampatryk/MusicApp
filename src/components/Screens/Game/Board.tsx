@@ -13,7 +13,8 @@ interface Props {
   noteRange: any,
   startPos: number,
   movingVal: AnimatedValue,
-  midis: Array<any>
+  midis: Array<any>,
+  unitLength: number
 }
 
 interface State {
@@ -29,7 +30,7 @@ export default class Board extends Component<Props, State> {
     midis: []
   }
 
-  unitLength = 5;
+  unitLength = this.props.unitLength;
 
   componentDidMount() {
     const {
