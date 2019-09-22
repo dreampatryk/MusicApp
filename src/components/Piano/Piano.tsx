@@ -1,37 +1,37 @@
-import React, { Component, RefObject } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component, RefObject } from 'react';
+import PropTypes from 'prop-types';
 
-import { StyleSheet, View, Button } from 'react-native'
+import { StyleSheet, View, Button } from 'react-native';
 
-import range from 'just-range'
+import range from 'just-range';
 
-import Key from './Key'
+import Key from './Key';
 
-import MidiNumbers from './MidiNumbers'
+import MidiNumbers from './MidiNumbers';
 
 interface Props {
-  noteRange: any,
-  onPlayNoteInput: Function,
-  onStopNoteInput: Function
+  noteRange: any;
+  onPlayNoteInput: Function;
+  onStopNoteInput: Function;
 }
 
 interface State {
-  noteRange: any,
-  keyReferences: RefObject<Key>[],
+  noteRange: any;
+  keyReferences: RefObject<Key>[];
 }
 
 class Piano extends Component<Props, State> {
   state = {
     noteRange: {
       first: MidiNumbers.fromNote('c4'),
-      last: MidiNumbers.fromNote('e5')
+      last: MidiNumbers.fromNote('e5'),
     },
-    keyReferences: new Array()
+    keyReferences: new Array(),
   };
 
   static propTypes = {
     onPlayNoteInput: PropTypes.func.isRequired,
-    onStopNoteInput: PropTypes.func.isRequired
+    onStopNoteInput: PropTypes.func.isRequired,
   };
 
   componentDidMount() {
@@ -40,10 +40,13 @@ class Piano extends Component<Props, State> {
     this.setState({
       noteRange: {
         first: MidiNumbers.fromNote(noteRange.first),
-        last: MidiNumbers.fromNote(noteRange.last)
+        last: MidiNumbers.fromNote(noteRange.last),
       },
-      keyReferences: range(MidiNumbers.fromNote(noteRange.first), MidiNumbers.fromNote(noteRange.last) + 1).map(React.createRef)
-    })
+      keyReferences: range(
+        MidiNumbers.fromNote(noteRange.first),
+        MidiNumbers.fromNote(noteRange.last) + 1,
+      ).map(React.createRef),
+    });
   }
 
   getNaturalKeyCount() {
@@ -95,24 +98,27 @@ class Piano extends Component<Props, State> {
     const naturalKeyWidth = this.getNaturalKeyWidth();
     return (
       <View style={styles.container}>
-        {
-          this.getMidiNumbers().map((midiNumber: number) => {
-            const { isAccidental } = MidiNumbers.getAttributes(midiNumber);
-            return (
-              <Key ref={this.state.keyReferences[midiNumber - this.state.noteRange.first]}
-                naturalKeyWidth={naturalKeyWidth}
-                midiNumber={midiNumber}
-                noteRange={this.state.noteRange}
-                accidental={isAccidental}
-                onPlayNoteInput={this.props.onPlayNoteInput}
-                onStopNoteInput={this.props.onStopNoteInput}
-                useTouchEvents={true}
-              />
-            )
-          })
-        }
+        {this.getMidiNumbers().map((midiNumber: number) => {
+          const { isAccidental } = MidiNumbers.getAttributes(midiNumber);
+          return (
+            <Key
+              ref={
+                this.state.keyReferences[
+                  midiNumber - this.state.noteRange.first
+                ]
+              }
+              naturalKeyWidth={naturalKeyWidth}
+              midiNumber={midiNumber}
+              noteRange={this.state.noteRange}
+              accidental={isAccidental}
+              onPlayNoteInput={this.props.onPlayNoteInput}
+              onStopNoteInput={this.props.onStopNoteInput}
+              useTouchEvents={true}
+            />
+          );
+        })}
       </View>
-    )
+    );
   }
 }
 
@@ -121,8 +127,8 @@ const styles = StyleSheet.create({
     flex: 0,
     position: 'relative',
     backgroundColor: 'transparent',
-    marginBottom: 100
-  }
-})
+    marginBottom: 100,
+  },
+});
 
-export default Piano
+export default Piano;

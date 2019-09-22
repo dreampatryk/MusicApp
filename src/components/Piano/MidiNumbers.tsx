@@ -1,25 +1,38 @@
 import range from 'just-range';
 
-const SORTED_PITCHES: string[] = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'];
+const SORTED_PITCHES: string[] = [
+  'C',
+  'Db',
+  'D',
+  'Eb',
+  'E',
+  'F',
+  'Gb',
+  'G',
+  'Ab',
+  'A',
+  'Bb',
+  'B',
+];
 const ACCIDENTAL_PITCHES: string[] = ['Db', 'Eb', 'Gb', 'Ab', 'Bb'];
 const PITCH_INDEXES: { [id: string]: number } = {
-  'C': 0,
+  C: 0,
   'C#': 1,
-  'Db': 1,
-  'D': 2,
+  Db: 1,
+  D: 2,
   'D#': 3,
-  'Eb': 3,
-  'E': 4,
-  'F': 5,
+  Eb: 3,
+  E: 4,
+  F: 5,
   'F#': 6,
-  'Gb': 6,
-  'G': 7,
+  Gb: 6,
+  G: 7,
   'G#': 8,
-  'Ab': 8,
-  'A': 9,
+  Ab: 8,
+  A: 9,
   'A#': 10,
-  'Bb': 10,
-  'B': 11,
+  Bb: 10,
+  B: 11,
 };
 const MIDI_NUMBER_C0 = 12;
 const MIN_MIDI_NUMBER = MIDI_NUMBER_C0;
@@ -68,10 +81,13 @@ function buildMidiNumberAttributes(midiNumber: number) {
 }
 
 function buildMidiNumberAttributesCache() {
-  return range(MIN_MIDI_NUMBER, MAX_MIDI_NUMBER + 1).reduce((cache: any, midiNumber: number) => {
-    cache[midiNumber] = buildMidiNumberAttributes(midiNumber);
-    return cache;
-  }, {});
+  return range(MIN_MIDI_NUMBER, MAX_MIDI_NUMBER + 1).reduce(
+    (cache: any, midiNumber: number) => {
+      cache[midiNumber] = buildMidiNumberAttributes(midiNumber);
+      return cache;
+    },
+    {},
+  );
 }
 
 const midiNumberAttributesCache = buildMidiNumberAttributesCache();
@@ -91,8 +107,8 @@ const NATURAL_MIDI_NUMBERS = range(MIN_MIDI_NUMBER, MAX_MIDI_NUMBER + 1).filter(
   (midiNumber: number) => !getAttributes(midiNumber).isAccidental,
 );
 
-const SHARPS = 'C C# D D# E F F# G G# A A# B'.split(' ')
-const FLATS = 'C Db D Eb E F Gb G Ab A Bb B'.split(' ')
+const SHARPS = 'C C# D D# E F F# G G# A A# B'.split(' ');
+const FLATS = 'C Db D Eb E F Gb G Ab A Bb B'.split(' ');
 /**
  * Given a midi number, returns a note name. The altered notes will have
  * flats unless explicitly set with the optional `useSharps` parameter.
@@ -111,13 +127,16 @@ const FLATS = 'C Db D Eb E F Gb G Ab A Bb B'.split(' ')
  * // it rounds to nearest note
  * midiToNoteName(61.7) // => "D4"
  */
-function midiToNoteName(midi: number, options: { pitchClass?: boolean, sharps: boolean } = { sharps: true }) {
-  midi = Math.round(midi)
-  const pcs = options.sharps === true ? SHARPS : FLATS
-  const pc = pcs[midi % 12]
-  if (options.pitchClass) return pc
-  const o = Math.floor(midi / 12) - 1
-  return pc + o
+function midiToNoteName(
+  midi: number,
+  options: { pitchClass?: boolean; sharps: boolean } = { sharps: true },
+) {
+  midi = Math.round(midi);
+  const pcs = options.sharps === true ? SHARPS : FLATS;
+  const pc = pcs[midi % 12];
+  if (options.pitchClass) return pc;
+  const o = Math.floor(midi / 12) - 1;
+  return pc + o;
 }
 
 export default {
@@ -126,5 +145,5 @@ export default {
   MIN_MIDI_NUMBER,
   MAX_MIDI_NUMBER,
   NATURAL_MIDI_NUMBERS,
-  midiToNoteName
+  midiToNoteName,
 };

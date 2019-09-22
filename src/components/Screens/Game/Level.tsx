@@ -1,9 +1,10 @@
 import React, { RefObject } from 'react';
 import { StyleSheet, View, Animated } from 'react-native';
 
+import getSong from '../../../networking/ServerConnector';
 import Piano from '../../Piano/Piano';
 import Board from './Board';
-import range from 'just-range'
+import range from 'just-range';
 
 interface Props {
   navigation: Navigation;
@@ -29,7 +30,8 @@ export default class Level extends React.Component<Props, State> {
   notes: any = this.props.navigation.getParam('notes', []);
   pianoElement: RefObject<Piano> = React.createRef();
 
-  onPlay = (note: number) => this.pianoElement.current.simulateOnTouchStart(note);
+  onPlay = (note: number) =>
+    this.pianoElement.current.simulateOnTouchStart(note);
 
   onStop = (note: number) => this.pianoElement.current.simulateOnTouchEnd(note);
 
@@ -44,22 +46,18 @@ export default class Level extends React.Component<Props, State> {
   }
 
   componentDidMount() {
-    let midisMap = range(0, 141).map(() => [])
-    midis.forEach(element => {
-      for (let i = element['start']; i < element['end']; i++) {
-        midisMap[i].push(element['pitch'])
-      }
-    })
-
-    let previous: Array<number> = []
+    let midisMap = this.initializeMidiMap();
+    let previous: Array<number> = [];
 
     this.intervalID = setInterval(() => {
-      let midiIndex = Math.trunc(this.state.movingVal._value / this.brickUnitLength);
+      let midiIndex = Math.trunc(
+        this.state.movingVal._value / this.brickUnitLength,
+      );
 
       if (previous.toString() !== midisMap[midiIndex].toString()) {
-        previous.forEach(note => this.onStop(note))
+        previous.forEach(note => this.onStop(note));
         previous = midisMap[midiIndex];
-        midisMap[midiIndex].forEach((note: number) => this.onPlay(note))
+        midisMap[midiIndex].forEach((note: number) => this.onPlay(note));
       }
     }, 10);
 
@@ -80,11 +78,26 @@ export default class Level extends React.Component<Props, State> {
         <Piano
           ref={this.pianoElement}
           noteRange={{ first: this.firstNote, last: this.lastNote }}
-          onPlayNoteInput={() => { }}
-          onStopNoteInput={() => { }} />
+          onPlayNoteInput={() => {}}
+          onStopNoteInput={() => {}}
+        />
       </View>
     );
   }
+
+  initializeMidiMap = () => {
+    let startTime = midis[0]['start'];
+    let endTime = midis[midis.length - 1]['end'] + 1;
+
+    let midisMap = range(startTime, endTime).map(() => []);
+    midis.forEach(element => {
+      for (let i = element['start']; i < element['end']; i++) {
+        midisMap[i].push(element['pitch']);
+      }
+    });
+
+    return midisMap;
+  };
 }
 
 const styles = StyleSheet.create({

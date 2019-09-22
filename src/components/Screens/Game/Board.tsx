@@ -1,50 +1,47 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import { StyleSheet, View, Animated } from 'react-native'
+import { StyleSheet, View, Animated } from 'react-native';
 
-import range from 'just-range'
+import range from 'just-range';
 
-import MidiNumbers from '../../Piano/MidiNumbers'
+import MidiNumbers from '../../Piano/MidiNumbers';
 
-import Brick from './Brick'
-import { AnimatedValue } from 'react-navigation'
+import Brick from './Brick';
+import { AnimatedValue } from 'react-navigation';
 
 interface Props {
-  noteRange: any,
-  startPos: number,
-  movingVal: AnimatedValue,
-  midis: Array<any>,
-  unitLength: number
+  noteRange: any;
+  startPos: number;
+  movingVal: AnimatedValue;
+  midis: Array<any>;
+  unitLength: number;
 }
 
 interface State {
-  noteRange: any,
-  midis: Array<any>
+  noteRange: any;
+  midis: Array<any>;
 }
 export default class Board extends Component<Props, State> {
   state = {
     noteRange: {
       first: MidiNumbers.fromNote('c4'),
-      last: MidiNumbers.fromNote('e5')
+      last: MidiNumbers.fromNote('e5'),
     },
-    midis: []
-  }
+    midis: [],
+  };
 
   unitLength = this.props.unitLength;
 
   componentDidMount() {
-    const {
-      noteRange,
-      midis
-    } = this.props
+    const { noteRange, midis } = this.props;
 
     this.setState({
       noteRange: {
         first: MidiNumbers.fromNote(noteRange.first),
-        last: MidiNumbers.fromNote(noteRange.last)
+        last: MidiNumbers.fromNote(noteRange.last),
       },
-      midis: midis
-    })
+      midis: midis,
+    });
   }
 
   getNaturalKeyCount() {
@@ -90,16 +87,27 @@ export default class Board extends Component<Props, State> {
           height={(element['end'] - element['start']) * this.unitLength}
         />
       );
-    })
+    });
   }
 
   render() {
     const naturalKeyWidth = this.getNaturalKeyWidth();
     return (
-      <Animated.View style={[styles.container, { top: this.props.startPos, transform: [{ translateY: this.props.movingVal }, { rotateX: '180deg' }] }]}>
+      <Animated.View
+        style={[
+          styles.container,
+          {
+            top: this.props.startPos,
+            transform: [
+              { translateY: this.props.movingVal },
+              { rotateX: '180deg' },
+            ],
+          },
+        ]}
+      >
         {this.generateNotes(naturalKeyWidth)}
       </Animated.View>
-    )
+    );
   }
 }
 
@@ -108,5 +116,5 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
     backgroundColor: 'transparent',
-  }
-})
+  },
+});

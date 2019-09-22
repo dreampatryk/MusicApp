@@ -3,23 +3,21 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import MidiNumbers from './MidiNumbers';
 
-
-
 interface Props {
-  midiNumber: number,
-  naturalKeyWidth: number, // Width as a ratio between 0 and 1
-  useTouchEvents: boolean,
-  accidental: boolean,
-  onPlayNoteInput: Function,
-  onStopNoteInput: Function,
-  pitchPositions: { [id: string]: number },
-  accidentalWidthRatio: number,
-  noteRange: any
+  midiNumber: number;
+  naturalKeyWidth: number; // Width as a ratio between 0 and 1
+  useTouchEvents: boolean;
+  accidental: boolean;
+  onPlayNoteInput: Function;
+  onStopNoteInput: Function;
+  pitchPositions: { [id: string]: number };
+  accidentalWidthRatio: number;
+  noteRange: any;
 }
 
 class Key extends React.Component<Props> {
   state = {
-    touched: false
+    touched: false,
   };
 
   static defaultProps = {
@@ -41,29 +39,33 @@ class Key extends React.Component<Props> {
   };
 
   simulateOnTouchStart = () => {
-    this.setState({ touched: true })
+    this.setState({ touched: true });
   };
 
   simulateOnTouchEnd = () => {
-    this.setState({ touched: false })
+    this.setState({ touched: false });
   };
 
   onPlayNoteInput = () => {
     this.setState({
-      ...this.state,
-      touched: true
+      touched: true,
     });
 
-    this.props.onPlayNoteInput(MidiNumbers.midiToNoteName(this.props.midiNumber), this.props.midiNumber);
+    this.props.onPlayNoteInput(
+      MidiNumbers.midiToNoteName(this.props.midiNumber),
+      this.props.midiNumber,
+    );
   };
 
   onStopNoteInput = () => {
     this.setState({
-      ...this.state,
-      touched: false
+      touched: false,
     });
 
-    this.props.onStopNoteInput(MidiNumbers.midiToNoteName(this.props.midiNumber), this.props.midiNumber);
+    this.props.onStopNoteInput(
+      MidiNumbers.midiToNoteName(this.props.midiNumber),
+      this.props.midiNumber,
+    );
   };
 
   // Key position is represented by the number of natural key widths from the left
@@ -90,18 +92,28 @@ class Key extends React.Component<Props> {
       useTouchEvents,
       accidental,
       children,
-    } = this.props
+    } = this.props;
 
     const { touched } = this.state;
     return (
       <View
-        style={[styles.ReactPiano__Key,
-        accidental ? styles.ReactPiano__Key__accidental : styles.ReactPiano__Key__natural,
-        {
-          left: ratioToPercentage(this.getRelativeKeyPosition(midiNumber) * naturalKeyWidth),
-          width: ratioToPercentage(accidental ? accidentalWidthRatio * naturalKeyWidth : naturalKeyWidth)
-        },
-        touched && styles.ReactPiano__Key__active]}
+        style={[
+          styles.ReactPiano__Key,
+          accidental
+            ? styles.ReactPiano__Key__accidental
+            : styles.ReactPiano__Key__natural,
+          {
+            left: ratioToPercentage(
+              this.getRelativeKeyPosition(midiNumber) * naturalKeyWidth,
+            ),
+            width: ratioToPercentage(
+              accidental
+                ? accidentalWidthRatio * naturalKeyWidth
+                : naturalKeyWidth,
+            ),
+          },
+          touched && styles.ReactPiano__Key__active,
+        ]}
       >
         <View style={styles.ReactPiano__NoteLabelContainer}>{children}</View>
       </View>
@@ -123,7 +135,7 @@ const styles = StyleSheet.create({
     borderColor: '#888',
     borderWidth: 1,
     borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4
+    borderBottomRightRadius: 4,
   },
   ReactPiano__Key__accidental: {
     height: 60,
@@ -132,16 +144,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderBottomLeftRadius: 4,
     borderBottomRightRadius: 4,
-    zIndex: 1
+    zIndex: 1,
   },
   ReactPiano__Key__active: {
-    backgroundColor: '#3ac8da'
+    backgroundColor: '#3ac8da',
   },
   ReactPiano__NoteLabelContainer: {
     flex: 1,
     /* Align children .ReactPiano__NoteLabel to the bottom of the key */
-    alignSelf: 'flex-end'
-  }
+    alignSelf: 'flex-end',
+  },
 });
 
 export default Key;

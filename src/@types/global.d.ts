@@ -1,9 +1,9 @@
 import {
-    NavigationScreenProp,
-    NavigationState,
-    NavigationParams,
+  NavigationScreenProp,
+  NavigationState,
+  NavigationParams,
 } from 'react-navigation';
 
 declare global {
-    type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
+  type Navigation = NavigationScreenProp<NavigationState, NavigationParams>;
 }
