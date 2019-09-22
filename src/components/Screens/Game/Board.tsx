@@ -5,7 +5,6 @@ import { StyleSheet, View, Animated } from 'react-native';
 import range from 'just-range';
 
 import MidiNumbers from '../../Piano/MidiNumbers';
-
 import Brick from './Brick';
 import { AnimatedValue } from 'react-navigation';
 
