@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Text, View, ImageBackground } from 'react-native';
 import styles from '../../../styles/Menu/MenuMainStyle';
 
@@ -30,6 +30,10 @@ export default class StartGameMenu extends React.Component<Props, State> {
     levels: [],
   };
 
+  componentDidMount() {
+    this.fillLevels();
+  }
+
   fillLevels() {
     let newLevels = [];
     for (let i = 1; i < 10; i++) {
@@ -46,10 +50,12 @@ export default class StartGameMenu extends React.Component<Props, State> {
   renderLevelButtons() {
     return this.state.levels.map(level => {
       return (
-        <MenuButton
-          text={`Level ${level.levelNumber}, difficulty: ${level.difficulty}`}
-          onPress={() => this.props.navigation.navigate('Level')}
-        />
+        <Fragment>
+          <MenuButton
+            text={`Level ${level.levelNumber}, difficulty: ${level.difficulty}`}
+            onPress={() => this.props.navigation.navigate('Level')}
+          />
+        </Fragment>
       );
     });
   }

@@ -14,17 +14,25 @@ interface TutorialDesc {
 }
 
 interface State {
-  images?: Array<TutorialDesc>;
+  images: Array<TutorialDesc>;
 }
 
 export default class TutorialMenu extends React.Component<Props, State> {
+  state: State = {
+    images: new Array(),
+  };
+  componentDidMount() {
+    this.addImageArrays();
+  }
+
   fillWithPictures(): Array<NodeRequire> {
     let reqTable: Array<NodeRequire> = [];
-    for (let i = 1; i < 4; i++) {
-      reqTable.push(
-        require(`../../../static/TutorialImages/Tutorial1Images/${i}.jpg`),
-      );
-    }
+    reqTable.push(
+      require(`../../../static/TutorialImages/Tutorial1Images/1.jpg`),
+      require(`../../../static/TutorialImages/Tutorial1Images/2.jpg`),
+      require(`../../../static/TutorialImages/Tutorial1Images/3.jpg`),
+      require(`../../../static/TutorialImages/Tutorial1Images/4.jpg`),
+    );
     return reqTable;
   }
 
@@ -40,16 +48,15 @@ export default class TutorialMenu extends React.Component<Props, State> {
   }
 
   renderMenuButtons() {
-    this.addImageArrays();
-    return this.state.images!.map(item => {
+    return this.state.images!.map(imageTable => {
       return (
         <Fragment>
           <MenuButton
-            text={item.text}
+            text={imageTable.text}
             onPress={() =>
               this.props.navigation.navigate('Tutorial', {
-                images: item.reqTable,
-                imgLength: item.reqTable.length,
+                images: imageTable.reqTable,
+                imgLength: imageTable.reqTable.length,
               })
             }
           />
