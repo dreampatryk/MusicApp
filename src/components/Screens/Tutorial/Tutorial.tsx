@@ -51,7 +51,7 @@ export default class Tutorial extends React.Component<Props, State> {
           </Text>
         </View>
         <Image
-          source={this.images[this.state.pictureIndex].req}
+          source={this.images[this.state.pictureIndex]}
           style={{ width: '100%', height: '70%' }}
         />
         <View

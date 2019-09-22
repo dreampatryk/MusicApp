@@ -10,72 +10,46 @@ interface Props {
   navigation: Navigation;
 }
 
-export default class StartGameMenu extends React.Component<Props> {
-  levels = [
-    {
-      text: 'Level 1',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-    {
-      text: 'Level 2',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-    {
-      text: 'Level 3',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-    {
-      text: 'Level 4',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-    {
-      text: 'Level 5',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-    {
-      text: 'Level 6',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-    {
-      text: 'Level 4',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-    {
-      text: 'Level 5',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-    {
-      text: 'Level 6',
-      notes: 'tutaj powinny byc nuty',
-      difficulty: 'w sumie można takie coś zrobić :V',
-    },
-  ];
+interface State {
+  levels: Level[];
+}
+
+enum Difficulty {
+  Easy = 'easy',
+  Medium = 'medium',
+  Hard = 'hard',
+}
+
+interface Level {
+  levelNumber: number;
+  difficulty: Difficulty;
+}
+
+export default class StartGameMenu extends React.Component<Props, State> {
+  state: State = {
+    levels: [],
+  };
+
+  fillLevels() {
+    let newLevels = [];
+    for (let i = 1; i < 10; i++) {
+      newLevels.push({
+        levelNumber: i,
+        difficulty: Difficulty.Easy,
+      });
+    }
+    this.setState({
+      levels: newLevels,
+    });
+  }
 
   renderLevelButtons() {
-    return this.levels.map((item, key) => {
+    return this.state.levels.map(level => {
       return (
-        <View key={key}>
-          <MenuButton
-            text={item.text}
-            onPress={() =>
-              this.props.navigation.navigate('Level', {
-                notes: item.notes,
-                notesLength: item.notes.length,
-              })
-            }
-          />
-          <Text style={TutorialTexts.smallText}>
-            Difficulty: {item.difficulty}
-          </Text>
-        </View>
+        <MenuButton
+          text={`Level ${level.levelNumber}, difficulty: ${level.difficulty}`}
+          onPress={() => this.props.navigation.navigate('Level')}
+        />
       );
     });
   }

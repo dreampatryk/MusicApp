@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Text, View, ImageBackground, ScrollView } from 'react-native';
 import styles from '../../../styles/Menu/MenuMainStyle';
 
@@ -8,49 +8,42 @@ interface Props {
   navigation: Navigation;
 }
 
-export default class TutorialMenu extends React.Component<Props> {
-  images1 = [
-    { req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/4.jpg') },
-  ];
-  images2 = [
-    { req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg') },
-  ];
-  images3 = [
-    { req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg') },
-  ];
-  images4 = [
-    { req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg') },
-  ];
-  images5 = [
-    { req: require('../../../static/TutorialImages/Tutorial1Images/1.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/2.jpg') },
-    { req: require('../../../static/TutorialImages/Tutorial1Images/3.jpg') },
-  ];
-  images = [
-    { reqTable: this.images1, text: 'Lesson 1' },
-    { reqTable: this.images2, text: 'Lesson 2' },
-    { reqTable: this.images3, text: 'Lesson 3' },
-    { reqTable: this.images4, text: 'Lesson 4' },
-    { reqTable: this.images5, text: 'Lesson 5' },
-    { reqTable: this.images5, text: 'Lesson 5' },
-    { reqTable: this.images5, text: 'Lesson 5' },
-    { reqTable: this.images5, text: 'Lesson 5' },
-    { reqTable: this.images5, text: 'Lesson 5' },
-    { reqTable: this.images5, text: 'Lesson 5' },
-  ];
+interface TutorialDesc {
+  reqTable: Array<NodeRequire>;
+  text: string;
+}
+
+interface State {
+  images?: Array<TutorialDesc>;
+}
+
+export default class TutorialMenu extends React.Component<Props, State> {
+  fillWithPictures(): Array<NodeRequire> {
+    let reqTable: Array<NodeRequire> = [];
+    for (let i = 1; i < 4; i++) {
+      reqTable.push(
+        require(`../../../static/TutorialImages/Tutorial1Images/${i}.jpg`),
+      );
+    }
+    return reqTable;
+  }
+
+  addImageArrays() {
+    let newImages: Array<TutorialDesc> = [];
+    for (let i = 1; i < 10; i++) {
+      const imageArray: NodeRequire[] = this.fillWithPictures();
+      newImages.push({ reqTable: imageArray, text: `Lesson ${i}` });
+    }
+    this.setState({
+      images: newImages,
+    });
+  }
+
   renderMenuButtons() {
-    return this.images.map((item, key) => {
+    this.addImageArrays();
+    return this.state.images!.map(item => {
       return (
-        <View key={key}>
+        <Fragment>
           <MenuButton
             text={item.text}
             onPress={() =>
@@ -60,12 +53,12 @@ export default class TutorialMenu extends React.Component<Props> {
               })
             }
           />
-        </View>
+        </Fragment>
       );
     });
   }
+
   render() {
-    const { navigation } = this.props;
     return (
       <ImageBackground
         source={require('../../../static/backgroundImages/pianoMain.jpg')}
