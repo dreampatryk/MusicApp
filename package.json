@@ -6,7 +6,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "expo": "^33.0.5",
+    "expo": "^46.0.14",
     "just-range": "^2.1.0",
     "prop-types": "^15.7.2",
     "react": "16.8.3",
